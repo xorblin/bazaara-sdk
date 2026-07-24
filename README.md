@@ -1,4 +1,4 @@
-# @bazaara/sdk
+# @xorblin.com/bazaara
 
 The official type-safe, lightweight Headless Storefront SDK for the **Bazaara E-Commerce Platform**. 
 
@@ -22,13 +22,13 @@ Install using your preferred package manager:
 
 ```bash
 # Using bun
-bun add @bazaara/sdk
+bun add @xorblin.com/bazaara
 
 # Using npm
-npm install @bazaara/sdk
+npm install @xorblin.com/bazaara
 
 # Using pnpm
-pnpm add @bazaara/sdk
+pnpm add @xorblin.com/bazaara
 ```
 
 ---
@@ -38,7 +38,7 @@ pnpm add @bazaara/sdk
 Initialize the `BazaaraStorefront` client with your Store ID:
 
 ```typescript
-import { BazaaraStorefront } from '@bazaara/sdk';
+import { BazaaraStorefront } from '@xorblin.com/bazaara';
 
 const bazaara = new BazaaraStorefront({
   storeId: 'your-store-uuid-here',
@@ -152,7 +152,7 @@ console.log(`Order placed successfully! Order Number: ${order.data.orderNumber}`
 By default, the SDK uses `window.localStorage` in the browser, falling back to a memory buffer on server targets. If you need to persist tokens across cookies or database caches (for SSR/Next.js routes or React Native's AsyncStorage), inject a custom synchronous storage object:
 
 ```typescript
-import { BazaaraStorefront, BazaaraStorage } from '@bazaara/sdk';
+import { BazaaraStorefront, BazaaraStorage } from '@xorblin.com/bazaara';
 
 const cookieStorage: BazaaraStorage = {
   getItem: (key) => {
@@ -179,7 +179,7 @@ const bazaara = new BazaaraStorefront({
 All network and API validation errors are caught and thrown as a `BazaaraError`. You can inspect validation fields easily:
 
 ```typescript
-import { BazaaraError } from '@bazaara/sdk';
+import { BazaaraError } from '@xorblin.com/bazaara';
 
 try {
   await bazaara.auth.login({
@@ -206,7 +206,7 @@ try {
 
 ## Developer Guide
 
-If you are contributing to `@bazaara/sdk`, use the following commands:
+If you are contributing to `@xorblin.com/bazaara`, use the following commands:
 
 ```bash
 # Install dependencies

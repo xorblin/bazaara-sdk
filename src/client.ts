@@ -35,6 +35,7 @@ class MemoryStorage implements BazaaraStorage {
 
 export interface BazaaraStorefrontConfig {
   storeId: string;
+  apiKey?: string;
   baseUrl?: string;
   storage?: BazaaraStorage;
 }
@@ -42,6 +43,7 @@ export interface BazaaraStorefrontConfig {
 export class BazaaraStorefront {
   private baseUrl: string;
   private storeId: string;
+  private apiKey?: string;
   private storage: BazaaraStorage;
 
   private readonly ACCESS_TOKEN_KEY: string;
@@ -52,6 +54,7 @@ export class BazaaraStorefront {
       throw new Error('BazaaraStorefront requires a storeId.');
     }
     this.storeId = config.storeId;
+    this.apiKey = config.apiKey;
     this.baseUrl = config.baseUrl || 'https://api.bazaara.store/api/v1';
 
     this.ACCESS_TOKEN_KEY = `bazaara_${config.storeId}_access_token`;
@@ -79,6 +82,10 @@ export class BazaaraStorefront {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
     };
+
+    if (this.apiKey) {
+      headers['X-Bazaara-API-Key'] = this.apiKey;
+    }
 
     const accessToken = this.storage.getItem(this.ACCESS_TOKEN_KEY);
     const guestToken = this.storage.getItem(this.GUEST_TOKEN_KEY);
