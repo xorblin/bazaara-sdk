@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
+        uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
@@ -27,19 +27,23 @@ jobs:
         run: |
           # Fetch local version from package.json
           LOCAL_VERSION=$(node -p "require('./package.json').version")
-          echo "Local version: $LOCAL_VERSION"
+          echo "ℹ️ Local version: $LOCAL_VERSION"
           
           # Fetch registry version (suppress errors if package hasn't been published yet)
           REGISTRY_VERSION=$(npm view @bazaara/sdk version 2>/dev/null || echo "0.0.0")
-          echo "Registry version: $REGISTRY_VERSION"
+          echo "ℹ️ Registry version on NPM: $REGISTRY_VERSION"
           
           if [ "$LOCAL_VERSION" != "$REGISTRY_VERSION" ]; then
-            echo "New version detected. Publishing..."
+            echo "🚀 New version detected. Preparing to publish..."
+            if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
+              echo "❌ Error: NPM_TOKEN secret is not set in GitHub Repository Secrets."
+              exit 1
+            fi
             echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
             npm publish
-            echo "Published successfully!"
+            echo "✅ Published successfully!"
           else
-            echo "Version $LOCAL_VERSION is already published to NPM. Skipping publish."
+            echo "ℹ️ Version $LOCAL_VERSION is already published to NPM. Skipping publish."
           fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
