@@ -1,5 +1,5 @@
 {
-  "name": "@xorblin/bazaara",
+  "name": "@xorblin.com/bazaara",
   "version": "1.0.0",
   "description": "Headless storefront client SDK for Bazaara E-Commerce Platform",
   "main": "./dist/index.js",
