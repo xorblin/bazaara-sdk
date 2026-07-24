@@ -42,6 +42,7 @@ import { BazaaraStorefront } from '@xorblin.com/bazaara';
 
 const bazaara = new BazaaraStorefront({
   storeId: 'your-store-uuid-here',
+  apiKey: 'bz_pk_your_storefront_api_key', // Secure storefront access key
   // Optional: defaults to 'https://api.bazaara.store/api/v1'
   baseUrl: 'http://localhost:3000/api/v1', 
 });
