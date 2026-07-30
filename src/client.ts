@@ -182,7 +182,11 @@ export class BazaaraStorefront {
         const queryParams = new URLSearchParams();
         Object.entries(params).forEach(([key, val]) => {
           if (val !== undefined && val !== null) {
-            queryParams.append(key, String(val));
+            if (Array.isArray(val)) {
+              val.forEach(item => queryParams.append(key, String(item)));
+            } else {
+              queryParams.append(key, String(val));
+            }
           }
         });
         const queryString = queryParams.toString();
@@ -193,12 +197,12 @@ export class BazaaraStorefront {
       return this.request<Product[]>('GET', path);
     },
 
-    getProduct: async (productId: string): Promise<BazaaraApiResponse<Product>> => {
-      return this.request<Product>('GET', `/products/${productId}`);
+    getProduct: async (productIdOrSku: string): Promise<BazaaraApiResponse<Product>> => {
+      return this.request<Product>('GET', `/products/${encodeURIComponent(productIdOrSku)}`);
     },
 
-    autocomplete: async (query: string): Promise<BazaaraApiResponse<Array<{ id: string; name: string }>>> => {
-      return this.request<Array<{ id: string; name: string }>>('GET', `/products/autocomplete?q=${encodeURIComponent(query)}`);
+    autocomplete: async (query: string): Promise<BazaaraApiResponse<Array<{ id: string; name: string; sku?: string; price?: number; image?: string | null }>>> => {
+      return this.request<Array<{ id: string; name: string; sku?: string; price?: number; image?: string | null }>>('GET', `/products/autocomplete?q=${encodeURIComponent(query)}`);
     }
   };
 

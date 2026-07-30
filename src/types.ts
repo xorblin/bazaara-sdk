@@ -22,6 +22,8 @@ export interface Product {
   lowStockAlertThreshold: number;
   trackInventory: boolean;
   category: string | null;
+  brand: string | null;
+  barcode: string | null;
   tags: string[];
   variants: ProductVariant[];
   images: string[];
